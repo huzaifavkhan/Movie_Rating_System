@@ -1,0 +1,64 @@
+--> For creatings the users table in PostgreSql:
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL
+  is_admin BOOLEAN DEFAULT FALSE
+);
+
+
+
+--> For creating the movies table in PostgreSql:
+
+CREATE TABLE movies (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    release_date DATE,
+    average_rating DECIMAL(3, 1),
+    image_path VARCHAR(255),
+    genre VARCHAR(100),
+    status VARCHAR(50)
+);
+
+
+
+
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY,                 -- Unique ID for each review
+    user_id INT NOT NULL,                  -- References the user who made the review
+    movie_id INT NOT NULL,                 -- References the movie being reviewed
+    review_text TEXT,                      -- The actual review content
+    rating DECIMAL(3, 1) CHECK (rating <= 10 AND rating >= 0), -- Rating out of 10
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE
+);
+
+
+
+
+--> For entering the data of the movies along with its images  in the table
+
+INSERT INTO movies (id, title, description, release_date, average_rating, image_path, genre, status) VALUES
+(1, 'The Shawshank Redemption', 'Hope, Friendship', '1994-09-22', 9.3, '/images/movie1.jpg', 'Sad', 'Popular'),
+(2, 'The Godfather', 'Mafia, Family', '1972-03-24', 9.2, '/images/movie2.jpg', 'Action', 'Popular'),
+(3, 'The Dark Knight', 'Hero vs Villain', '2008-07-18', 9.0, '/images/movie3.jpg', 'Action', 'Popular'),
+(4, 'The Lord of the Rings: The Return of the King', 'Epic Battle', '2003-12-17', 8.9, '/images/movie4.jpg', 'Action', 'Popular'),
+(5, 'Pulp Fiction', 'Crime, Redemption', '1994-10-14', 8.9, '/images/movie5.jpg', 'Sad', 'Popular'),
+(6, 'The Lord of the Rings: The Fellowship of the Ring', 'Journey Begins', '2001-12-19', 8.8, '/images/movie6.jpg', 'Action', 'Popular'),
+(7, 'Forrest Gump', 'Life Story', '1994-07-06', 8.8, '/images/movie7.jpg', 'Sad', 'Suggested'),
+(8, 'Inception', 'Dreams, Reality', '2010-07-16', 8.8, '/images/movie8.jpg', 'Action', 'Suggested'),
+(9, 'Fight Club', 'Chaos, Rebellion', '1999-10-15', 8.8, '/images/movie9.jpg', 'Action', 'Suggested'),
+(10, 'The Matrix', 'Reality Questioned', '1999-03-31', 8.7, '/images/movie10.jpg', 'Action', 'Suggested'),
+(11, 'Goodfellas', 'Mob Life', '1990-09-19', 8.7, '/images/movie11.jpg', 'Sad', 'Suggested'),
+(12, 'The Empire Strikes Back', 'Rebellion, Hope', '1980-05-21', 8.7, '/images/movie12.jpg', 'Action', 'Popular'),
+(13, 'The Silence of the Lambs', 'Horror, Thriller', '1991-02-14', 8.6, '/images/movie13.jpg', 'Sad', 'New'),
+(14, 'Se7en', 'Murder, Investigation', '1995-09-22', 8.6, '/images/movie14.jpg', 'Sad', 'New'),
+(15, 'The Usual Suspects', 'Mystery, Crime', '1995-08-16', 8.5, '/images/movie15.jpg', 'Sad', 'New'),
+(16, 'The Lion King', 'Journey, Legacy', '1994-06-24', 8.5, '/images/movie16.jpg', 'Romantic', 'New'),
+(17, 'Interstellar', 'Space, Time', '2014-11-07', 8.6, '/images/movie17.jpg', 'Action', 'New'),
+(18, 'City of God', 'Violence, Survival', '2002-02-08', 8.6, '/images/movie18.jpg', 'Action', 'Popular');
+
+
